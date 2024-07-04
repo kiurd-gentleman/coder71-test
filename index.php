@@ -15,5 +15,6 @@ require 'config/database.php';
 /**
  * Handle routes from Route helper class
  */
+//echo $_POST['name'];
 use App\Core\Route;
 Route::handle($_SERVER['PHP_SELF']);
