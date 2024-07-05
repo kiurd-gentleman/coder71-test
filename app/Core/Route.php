@@ -154,10 +154,11 @@ class Route
                 $actions = explode('@', $desired_route->action);
                 $class = '\\App\\Http\\Controllers\\' . $actions[0];
                 $obj = new $class();
-//                (new Request()) = $_POST;
-                $obj1 = new Request();
-                $obj1->request = $_POST;
-                echo call_user_func(array($obj, $actions[1]));
+
+                //pass the request object to the controller
+
+
+                echo call_user_func(array($obj, $actions[1]($_POST)));
             }
         } else {
             http_response_code(404);

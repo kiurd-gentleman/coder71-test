@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Core\Request;
+use App\Models\User;
 
 class HomeController
 {
@@ -18,6 +19,7 @@ class HomeController
         echo $_POST['name'];
         echo $_POST['email'];
         echo 'Hello from HomeController@store';
+        User::create();
     }
 
 }
