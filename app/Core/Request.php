@@ -39,36 +39,38 @@ abstract class Request
 //            var_dump($this->getBody()[$attribute]);
             if (!isset($this->getBody()[$attribute])) {
                 $this->addErrorByRule($attribute, self::RULE_REQUIRED);
-
-                return $this->errors;
+//                return $this->errors;
             }
 
-            $value = $this->getBody()[$attribute];
+            if (isset($this->getBody()[$attribute])){
+                $value = $this->getBody()[$attribute];
 
-            foreach ($rules as $key => $rule) {
-                $ruleName = $rule;
+                foreach ($rules as $key => $rule) {
+                    $ruleName = $rule;
 //                var_dump($rules, $value, $key);
 
-                if (!is_string($rule)) {
-                    $ruleName = $key;
-                }
+                    if (!is_string($rule)) {
+                        $ruleName = $key;
+                    }
 
-                if ($ruleName === self::RULE_REQUIRED && !$value) {
-                    $this->addErrorByRule($attribute, self::RULE_REQUIRED);
-                }
+                    if ($ruleName === self::RULE_REQUIRED && !$value) {
+                        $this->addErrorByRule($attribute, self::RULE_REQUIRED);
+                    }
 
-                if ($ruleName === self::RULE_EMAIL && !filter_var($value, FILTER_VALIDATE_EMAIL)) {
-                    $this->addErrorByRule($attribute, self::RULE_EMAIL);
-                }
+                    if ($ruleName === self::RULE_EMAIL && !filter_var($value, FILTER_VALIDATE_EMAIL)) {
+                        $this->addErrorByRule($attribute, self::RULE_EMAIL);
+                    }
 
-                if ($ruleName === self::RULE_MIN && strlen($value) < $rule) {
-                    $this->addErrorByRule($attribute, self::RULE_MIN, ['min' => $rule]);
-                }
+                    if ($ruleName === self::RULE_MIN && strlen($value) < $rule) {
+                        $this->addErrorByRule($attribute, self::RULE_MIN, ['min' => $rule]);
+                    }
 
-                if ($ruleName === self::RULE_MAX && strlen($value) > $rule) {
-                    $this->addErrorByRule($attribute, self::RULE_MAX, ['max' => $rule]);
+                    if ($ruleName === self::RULE_MAX && strlen($value) > $rule) {
+                        $this->addErrorByRule($attribute, self::RULE_MAX, ['max' => $rule]);
+                    }
                 }
             }
+
         }
         return $this->errors;
     }
