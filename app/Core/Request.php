@@ -35,6 +35,8 @@ abstract class Request
     {
         foreach ($this->rules() as $attribute => $rules) {
 
+//            var_dump($this->rules());
+//            var_dump($this->getBody()[$attribute]);
             if (!isset($this->getBody()[$attribute])) {
                 $this->addErrorByRule($attribute, self::RULE_REQUIRED);
 
@@ -45,6 +47,7 @@ abstract class Request
 
             foreach ($rules as $key => $rule) {
                 $ruleName = $rule;
+//                var_dump($rules, $value, $key);
 
                 if (!is_string($rule)) {
                     $ruleName = $key;
@@ -67,7 +70,6 @@ abstract class Request
                 }
             }
         }
-
         return $this->errors;
     }
 
@@ -90,12 +92,6 @@ abstract class Request
     {
         $data = [];
 
-        if ($this->isGet()) {
-            foreach ($_GET as $key => $value) {
-                $data[$key] = filter_input(INPUT_GET, $key, FILTER_SANITIZE_SPECIAL_CHARS);
-            }
-        }
-
         if ($this->isPost()) {
             $json_data = $this->extractJsonData();
 
@@ -107,19 +103,6 @@ abstract class Request
                     $data[$key] = $value;
                 else
                     $data[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
-            }
-        }
-
-        if ($this->isPut() || $this->isDelete()) {
-            $json_data = $this->extractJsonData();
-
-            if (!empty($json_data))
-                $requestData = $this->extractJsonData();
-            else
-                $requestData = $this->extractPutData();
-
-            foreach ($requestData as $key => $value) {
-                $data[$key] = $value;
             }
         }
 
