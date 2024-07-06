@@ -12,6 +12,8 @@ require 'routes/web.php';
  */
 require 'config/database.php';
 
+require 'bootstrap/app.php';
+
 /**
  * Handle routes from Route helper class
  */

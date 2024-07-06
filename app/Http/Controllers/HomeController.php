@@ -4,22 +4,38 @@ namespace App\Http\Controllers;
 
 use App\Core\Request;
 use App\Models\User;
+use App\Requests\UserStoreRequest;
 
 class HomeController
 {
+    private $userStoreRequest;
+    public function __construct()
+    {
+        $this->userStoreRequest = new UserStoreRequest();
+    }
     public function index()
     {
         echo 'Hello from HomeController';
     }
 
-    public function store(Request $request)
+    public function store()
     {
-        print_r($request);
-        //post method
-        echo $_POST['name'];
-        echo $_POST['email'];
-        echo 'Hello from HomeController@store';
-        User::create();
+        $this->userStoreRequest->validation();
+
+        $request = $this->userStoreRequest->getBody();
+
+        var_dump($request);
+
+
+//        $user = (object)[
+//            'first_name' => $_POST['first_name'],
+//            'last_name' => $_POST['last_name'],
+//            'email' => $_POST['email'],
+//            'age' => $_POST['age'],
+//            'country' => $_POST['country'],
+//        ];
+//
+//        User::create($user);
     }
 
 }
