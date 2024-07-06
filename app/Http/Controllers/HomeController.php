@@ -13,6 +13,11 @@ class HomeController
     {
         $this->userStoreRequest = new UserStoreRequest();
     }
+
+    public function install()
+    {
+
+    }
     public function index()
     {
         echo 'Hello from HomeController';
@@ -33,15 +38,12 @@ class HomeController
 
         $request = $this->userStoreRequest->getBody();
 //
-//        var_dump($request);
-
-
         $user = (object)[
-            'first_name' => $_POST['first_name'],
-            'last_name' => $_POST['last_name'],
-            'email' => $_POST['email'],
-            'age' => $_POST['age'],
-            'country' => $_POST['country'],
+            'first_name' => $request['first_name'],
+            'last_name' => $request['last_name'],
+            'email' => $request['email'],
+            'age' => $request['age'],
+            'country' => $request['country'],
         ];
 
         User::create($user);
