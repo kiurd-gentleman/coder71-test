@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Core\Migration;
 use App\Core\Request;
 use App\Models\User;
 use App\Requests\UserStoreRequest;
@@ -16,6 +17,7 @@ class HomeController
 
     public function install()
     {
+        return (new Migration())->doMigrations();
 
     }
     public function index()

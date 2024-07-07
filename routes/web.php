@@ -6,3 +6,6 @@ Route::get('/', 'HomeController@index');
 Route::get('/install', 'HomeController@install');
 Route::get('/hello/{id}', 'HomeController@index');
 Route::post('/store', 'HomeController@store');
+
+
+Route::post('/product-review', 'ProductReviewController@store');
